@@ -1,3 +1,6 @@
+//Ben Clauser
+//Hangman
+
 const wordEl = document.getElementById('word');
 const wrongLettersEl = document.getElementById('wrong-letters');
 const playAgainBtn = document.getElementById('play-button');
@@ -7,11 +10,9 @@ const finalMessage = document.getElementById('final-message');
 const finalMessageRevealWord = document.getElementById('final-message-reveal-word');
 
 const figureParts = document.querySelectorAll('.figure-part');
-
 const words = ['dog', 'lemur', 'eagle', 'python','kangaroo','lizard','spider','caterpillar','bison','ostrich','cheetah','bear','chameleon','frog','bull','rooster','wasp','panda','zebra','camel','elephant','koala','tarsier','rhino','gorilla','monkey','chipmunk','skunk','squirell'];
 
 let selectedWord = words[Math.floor(Math.random() * words.length)];
-
 let playable = true;
 
 const correctLetters = [];
@@ -21,28 +22,24 @@ const wrongLetters = [];
 function displayWord() {
 	wordEl.innerHTML = `
     ${selectedWord
-			.split('')
-			.map(
-				letter => `
-          <span class="letter">
-            ${correctLetters.includes(letter) ? letter : ''}
-          </span>
-        `
-			)
-			.join('')}
+		.split('').map(letter => `
+		<span class="letter">
+		${correctLetters.includes(letter) ? letter : ''}
+		</span>
+	`
+		)
+		.join('')}
   `;
 
 	const innerWord = wordEl.innerText.replace(/[ \n]/g, '');
-
 	if (innerWord === selectedWord) {
 		finalMessage.innerText = 'Congratulations! You won! 😎';
 		popup.style.display = 'flex';
-
 		playable = false;
 	}
 }
 
-// Update the wrong letters
+//updates wrong letter
 function updateWrongLettersEl() {
 	// Display wrong letters
 	wrongLettersEl.innerHTML = `
@@ -50,10 +47,9 @@ function updateWrongLettersEl() {
     ${wrongLetters.map(letter => `<span>${letter.toUpperCase()}</span>`)}
   `;
 
-	// Display parts
+	// parts
 	figureParts.forEach((part, index) => {
 		const errors = wrongLetters.length;
-
 		if (index < errors) {
 			part.style.display = 'block';
 		} else {
@@ -74,7 +70,6 @@ function updateWrongLettersEl() {
 // Show notification
 function showNotification() {
 	notification.classList.add('show');
-
 	setTimeout(() => {
 		notification.classList.remove('show');
 	}, 2000);
@@ -116,11 +111,8 @@ playAgainBtn.addEventListener('click', () => {
 	wrongLetters.splice(0);
 
 	selectedWord = words[Math.floor(Math.random() * words.length)];
-
 	displayWord();
-
 	updateWrongLettersEl();
-
 	popup.style.display = 'none';
 });
 
